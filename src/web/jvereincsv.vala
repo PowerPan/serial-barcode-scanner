@@ -88,6 +88,6 @@ public class JVereinCSVMemberFile {
 	}
 
 	private string[] csv_split(string line) {
-		return /;(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/.split(line);
+		return /;(?=(?:[^\"]*\"[^\"]*\");(?![^\"]*\"))/.split(line);
 	}
 }
