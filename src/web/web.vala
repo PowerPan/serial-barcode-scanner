@@ -322,6 +322,7 @@ public class WebServer {
 				}
 
 				/* new & changed users */
+				stdout.printf("new & changed users");
 				string data1 = "";
 				foreach(var member in csvjvereinimport.get_members()) {
 					if(db.user_exists(member.id) && !db.user_equals(member)) {
@@ -335,6 +336,7 @@ public class WebServer {
 				t.replace("DATA1", data1);
 
 				/* removed users */
+				stdout.printf("removed users");
 				Gee.List<int> blockedusers = csvjvereinimport.missing_unblocked_members();
 				if(blockedusers.size > 0) {
 					string data2 = "<b>Disabling the following users</b>, because they are no longer found in the member CSV: <ul>";
@@ -353,6 +355,7 @@ public class WebServer {
 				}
 
 				/* show correct blocks */
+				stdout.printf("show correct blocks");
 				t.replace("STEP1",  "none");
 				t.replace("STEP23", "block");
 				if(postdata["step"] == "1") {
@@ -365,11 +368,13 @@ public class WebServer {
 
 				if(postdata["step"] == "2") {
 					/* disable users */
+					stdout.printf("disable users");
 					foreach(var member in csvimport.missing_unblocked_members()) {
 						db.user_disable(member, true);
 					}
 
 					/* update users */
+					stdout.printf("update users");
 					foreach(var member in csvimport.get_members()) {
 						db.user_replace(member);
 					}
