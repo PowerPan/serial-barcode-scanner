@@ -313,17 +313,17 @@ public class WebServer {
 				if(filedata != null) {
 					string text = (string) filedata.data;
 					text = text.substring(0,(long) filedata.length-1);
-					csvimport = new JVereinCSVMemberFile(text);
+					csvjvereinimport = new JVereinCSVMemberFile(text);
 				}
 
-				if(csvimport == null) {
+				if(csvjvereinimport == null) {
 					handler_403(server, msg, path, query, client);
 					return;
 				}
 
 				/* new & changed users */
 				string data1 = "";
-				foreach(var member in csvimport.get_members()) {
+				foreach(var member in csvjvereinimport.get_members()) {
 					if(db.user_exists(member.id) && !db.user_equals(member)) {
 						var dbmember = db.get_user_info(member.id);
 						data1 += @"<tr class=\"error\"><td><i class=\"icon-minus-sign\"></i><td>$(dbmember.id)</td><td>$(dbmember.firstname)</td><td>$(dbmember.lastname)</td><td>$(dbmember.email)</td><td>$(dbmember.gender)</td><td>$(dbmember.street)</td><td>$(dbmember.postcode)</td><td>$(dbmember.city)</td><td>$(dbmember.pgp)</td><td>$(dbmember.hidden)</td><td>$(dbmember.disabled)</td><td>$(dbmember.joined_at)</td></tr>";
@@ -335,7 +335,7 @@ public class WebServer {
 				t.replace("DATA1", data1);
 
 				/* removed users */
-				Gee.List<int> blockedusers = csvimport.missing_unblocked_members();
+				Gee.List<int> blockedusers = csvjvereinimport.missing_unblocked_members();
 				if(blockedusers.size > 0) {
 					string data2 = "<b>Disabling the following users</b>, because they are no longer found in the member CSV: <ul>";
 
@@ -374,7 +374,7 @@ public class WebServer {
 						db.user_replace(member);
 					}
 
-					csvimport = null;
+					csvjvereinimport = null;
 				}
 			}
 

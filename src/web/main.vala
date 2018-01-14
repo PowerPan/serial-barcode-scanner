@@ -15,6 +15,7 @@
 
 Database db;
 public CSVMemberFile csvimport;
+public JVereinCSVMemberFile csvjvereinimport;
 public PGP pgp;
 public Config cfg;
 public AudioPlayer audio;
