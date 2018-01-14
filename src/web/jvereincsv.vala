@@ -48,6 +48,7 @@ public class JVereinCSVMemberFile {
 	public JVereinCSVMemberFile(string data) {
 		foreach(var line in data.split("\n")) {
 			var linedata = csv_split(line);
+			stderr.printf("\n");
 			if(linedata.length >= 12 && csv_value(linedata[44]) != "mitglied_id") {
 				var m = UserInfo();
 				m.id = int.parse(csv_value(linedata[44]));
