@@ -62,8 +62,8 @@ public class JVereinCSVMemberFile {
 				m.postcode = csv_value(linedata[19]);
 				m.city = csv_value(linedata[23]);
 				m.gender = csv_value(linedata[56]) == "m" ? "masculinum" : csv_value(linedata[56]) == "w" ? "femininum" : "unknown";
-				m.joined_at = int.parse(csv_value(linedata[51]));
-				m.pgp = "";
+				m.joined_at = int.parse(csv_value(linedata[8]));
+				m.pgp = csv_value(linedata[9]);
 				m.hidden = int.parse(csv_value(linedata[10])) != 0;
 				m.disabled = int.parse(csv_value(linedata[11])) != 0;
 				m.soundTheme = "";
