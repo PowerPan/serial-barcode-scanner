@@ -63,6 +63,9 @@ public class JVereinCSVMemberFile {
 				m.city = csv_value(linedata[23]);
 				m.gender = csv_value(linedata[56]) == "m" ? "masculinum" : csv_value(linedata[56]) == "w" ? "femininum" : "unknown";
 				m.joined_at = int.parse(csv_value(linedata[51]));
+				m.pgp = "";
+				m.hidden = 0;
+				m.disabled = 0;
 				m.soundTheme = "";
 				if(m.id != 0) {
 					members += m;
