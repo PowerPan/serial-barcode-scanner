@@ -50,9 +50,9 @@ public class JVereinCSVMemberFile {
 			//var linedata = csv_split(line);
 			var linedata = line.split(";");
 			stderr.printf("\n");
+			stderr.printf("Fields %i\n", linedata.length);
 			stderr.printf("\n");
-			stderr.printf("\n");
-			if(linedata.length >= 12) {
+			if(linedata.length >= 56) {
 				var m = UserInfo();
 				m.id = int.parse(csv_value(linedata[44]));
 				stderr.printf(csv_value(linedata[44]));
