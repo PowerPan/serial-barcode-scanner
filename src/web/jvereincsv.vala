@@ -38,10 +38,6 @@ public class JVereinCSVMemberFile {
 		return result;
 	}
 
-	private string[] csv_split(string line) {
-		return /;(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/.split(line);
-	}
-
 	private string csv_value(string value) {
 		if(value[0] == '"' && value[value.length-1] == '"')
 			return value.substring(1,value.length-2);
@@ -52,7 +48,7 @@ public class JVereinCSVMemberFile {
 	public JVereinCSVMemberFile(string data) {
 		foreach(var line in data.split("\n")) {
 			var linedata = csv_split(line);
-			if(linedata.length >= 12) {
+			if(linedata.length >= 12 && csv_value(linedata[44]) != "mitglied_id") {
 				var m = UserInfo();
 				m.id = int.parse(csv_value(linedata[44]));
 				stderr.printf(csv_value(linedata[44]));
@@ -88,5 +84,9 @@ public class JVereinCSVMemberFile {
 
 	public UserInfo[] get_members() {
 		return members;
+	}
+
+	private string[] csv_split(string line) {
+		return /;(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/.split(line);
 	}
 }
