@@ -293,7 +293,7 @@ public class WebServer {
 				return;
 			}
 			var t = new WebTemplate("users/import.html", session);
-			t.replace("TITLE", shortname + " Shop System: User Import");
+			t.replace("TITLE", shortname + " Shop System: User JVerein Import");
             t.replace("SHORTNAME", shortname);
 			t.menu_set_active("users");
 
