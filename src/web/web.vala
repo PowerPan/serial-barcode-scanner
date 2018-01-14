@@ -288,17 +288,21 @@ public class WebServer {
 	void handler_user_jvereinimport(Soup.Server server, Soup.Message msg, string path, GLib.HashTable<string,string>? query, Soup.ClientContext client) {
 		try {
 			var session = new WebSession(server, msg, path, query, client);
+			stdout.printf("session");
 			if(!session.superuser && !session.auth_users) {
 				handler_403(server, msg, path, query, client);
 				return;
 			}
 			var t = new WebTemplate("users/import.html", session);
+			stdout.printf("template");
 			t.replace("TITLE", shortname + " Shop System: User JVerein Import");
             t.replace("SHORTNAME", shortname);
 			t.menu_set_active("users");
 
 			Soup.Buffer filedata;
+			stdout.printf("filedata");
 			var postdata = Soup.Form.decode_multipart(msg, "file", null, null, out filedata);
+			stdout.printf("postdata");
 			if(postdata == null || !postdata.contains("step")) {
 				t.replace("DATA1", "");
 				t.replace("DATA2", "");
@@ -311,6 +315,7 @@ public class WebServer {
 				return;
 			} else {
 				if(filedata != null) {
+					stdout.printf("filedata != null");
 					string text = (string) filedata.data;
 					text = text.substring(0,(long) filedata.length-1);
 					csvjvereinimport = new JVereinCSVMemberFile(text);
