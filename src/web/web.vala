@@ -286,23 +286,24 @@ public class WebServer {
 	}
 
 	void handler_user_jvereinimport(Soup.Server server, Soup.Message msg, string path, GLib.HashTable<string,string>? query, Soup.ClientContext client) {
+		stderr.printf("ok");
 		try {
 			var session = new WebSession(server, msg, path, query, client);
-			stdout.printf("session");
+			stderr.printf("session");
 			if(!session.superuser && !session.auth_users) {
 				handler_403(server, msg, path, query, client);
 				return;
 			}
 			var t = new WebTemplate("users/import.html", session);
-			stdout.printf("template");
+			stderr.printf("template");
 			t.replace("TITLE", shortname + " Shop System: User JVerein Import");
             t.replace("SHORTNAME", shortname);
 			t.menu_set_active("users");
 
 			Soup.Buffer filedata;
-			stdout.printf("filedata");
+			stderr.printf("filedata");
 			var postdata = Soup.Form.decode_multipart(msg, "file", null, null, out filedata);
-			stdout.printf("postdata");
+			stderr.printf("postdata");
 			if(postdata == null || !postdata.contains("step")) {
 				t.replace("DATA1", "");
 				t.replace("DATA2", "");
@@ -315,7 +316,7 @@ public class WebServer {
 				return;
 			} else {
 				if(filedata != null) {
-					stdout.printf("filedata != null");
+					stderr.printf("filedata != null");
 					string text = (string) filedata.data;
 					text = text.substring(0,(long) filedata.length-1);
 					csvjvereinimport = new JVereinCSVMemberFile(text);
@@ -327,7 +328,7 @@ public class WebServer {
 				}
 
 				/* new & changed users */
-				stdout.printf("new & changed users");
+				stderr.printf("new & changed users");
 				string data1 = "";
 				foreach(var member in csvjvereinimport.get_members()) {
 					if(db.user_exists(member.id) && !db.user_equals(member)) {
@@ -341,7 +342,7 @@ public class WebServer {
 				t.replace("DATA1", data1);
 
 				/* removed users */
-				stdout.printf("removed users");
+				stderr.printf("removed users");
 				Gee.List<int> blockedusers = csvjvereinimport.missing_unblocked_members();
 				if(blockedusers.size > 0) {
 					string data2 = "<b>Disabling the following users</b>, because they are no longer found in the member CSV: <ul>";
@@ -360,7 +361,7 @@ public class WebServer {
 				}
 
 				/* show correct blocks */
-				stdout.printf("show correct blocks");
+				stderr.printf("show correct blocks");
 				t.replace("STEP1",  "none");
 				t.replace("STEP23", "block");
 				if(postdata["step"] == "1") {
@@ -373,13 +374,13 @@ public class WebServer {
 
 				if(postdata["step"] == "2") {
 					/* disable users */
-					stdout.printf("disable users");
+					stderr.printf("disable users");
 					foreach(var member in csvimport.missing_unblocked_members()) {
 						db.user_disable(member, true);
 					}
 
 					/* update users */
-					stdout.printf("update users");
+					stderr.printf("update users");
 					foreach(var member in csvimport.get_members()) {
 						db.user_replace(member);
 					}
