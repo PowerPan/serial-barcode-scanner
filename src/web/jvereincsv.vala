@@ -55,17 +55,29 @@ public class JVereinCSVMemberFile {
 			if(linedata.length >= 12) {
 				var m = UserInfo();
 				m.id = int.parse(csv_value(linedata[44]));
+				stdout.printf(csv_value(linedata[44]));
 				m.email = csv_value(linedata[24]);
+				stdout.printf(csv_value(linedata[24]));
 				m.firstname = csv_value(linedata[41]);
+				stdout.printf(csv_value(linedata[41]));
 				m.lastname = csv_value(linedata[25]);
+				stdout.printf(csv_value(linedata[25]));
 				m.street = csv_value(linedata[39]);
+				stdout.printf(csv_value(linedata[39]));
 				m.postcode = csv_value(linedata[19]);
+				stdout.printf(csv_value(linedata[19]));
 				m.city = csv_value(linedata[23]);
+				stdout.printf(csv_value(linedata[23]));
 				m.gender = csv_value(linedata[56]) == "m" ? "masculinum" : csv_value(linedata[56]) == "w" ? "femininum" : "unknown";
+				stdout.printf(csv_value(linedata[56]));
 				m.joined_at = int.parse(csv_value(linedata[8]));
+				stdout.printf(csv_value(linedata[8]));
 				m.pgp = csv_value(linedata[9]);
+				stdout.printf(csv_value(linedata[9]));
 				m.hidden = int.parse(csv_value(linedata[10])) != 0;
+				stdout.printf(csv_value(linedata[10]));
 				m.disabled = int.parse(csv_value(linedata[11])) != 0;
+				stdout.printf(csv_value(linedata[11]));
 				m.soundTheme = "";
 				if(m.id != 0) {
 					members += m;
