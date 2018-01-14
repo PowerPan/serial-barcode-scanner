@@ -47,7 +47,8 @@ public class JVereinCSVMemberFile {
 
 	public JVereinCSVMemberFile(string data) {
 		foreach(var line in data.split("\n")) {
-			var linedata = csv_split(line);
+			//var linedata = csv_split(line);
+			var linedata = line.split(";"));
 			stderr.printf("\n");
 			if(linedata.length >= 12) {
 				var m = UserInfo();
